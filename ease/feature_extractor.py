@@ -148,7 +148,7 @@ class FeatureExtractor(object):
         
         # Ian Tan: Add some shallow features
         # sentence_counts which is the same as punc_count (not needed)
-        para_counts = [e.count("\n") for e in text]
+        para_counts = [e.count("\r") for e in text]
         """
         words_per_sentence = [i / j for i, j in zip(word_counts, punc_count)]
         sentence_per_para = [i / j for i, j in zip(punc_count, para_counts)]
