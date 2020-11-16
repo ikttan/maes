@@ -136,6 +136,7 @@ class FeatureExtractor(object):
         Returns an array of length features
         e_set - EssaySet object
         """
+        
         text = e_set._text
         lengths = [len(e) for e in text]
         word_counts = [max(len(t),1) for t in e_set._tokens]
@@ -144,14 +145,36 @@ class FeatureExtractor(object):
         punc_count = [e.count(".") + e.count("?") + e.count("!") for e in text]
         chars_per_word = [lengths[m] / float(word_counts[m]) for m in range(0, len(text))]
 
+        
+        # Ian Tan: Add some shallow features
+        # sentence_counts which is the same as punc_count (not needed)
+        para_counts = [e.count("\n") for e in text]
+        """
+        words_per_sentence = [i / j for i, j in zip(word_counts, punc_count)]
+        sentence_per_para = [i / j for i, j in zip(punc_count, para_counts)]
+        
+        #words_per_sentence = list(map(truediv, word_counts, punc_count)) # as approximation
+        #sentence_per_para = list(map(truediv, punc_count, para_counts)) # as approximation
+        """
+        
         good_pos_tags,bad_pos_positions= self._get_grammar_errors(e_set._pos,e_set._text,e_set._tokens)
         good_pos_tag_prop = [good_pos_tags[m] / float(word_counts[m]) for m in range(0, len(text))]
 
         # print("length: {}, word_counts: {}, comma_count: {}, ap_count: {}, punc_count: {}, chars_per_word: {}, good_pos_tags: {}, good_pos_tag_prop: {}".format(lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word, good_pos_tags, good_pos_tag_prop))
+        
         length_arr = numpy.array((
-        lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word, good_pos_tags,
-        good_pos_tag_prop)).transpose()
-
+        lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word,
+        para_counts,
+        good_pos_tags, good_pos_tag_prop)).transpose()
+        
+        """
+        # Ian Tan: Return new shallow features
+        length_arr = numpy.array((
+            lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word, 
+            para_counts, words_per_sentence, sentence_per_para, good_pos_tags,
+            good_pos_tag_prop)).transpose()
+        """
+        
         return length_arr.copy()
 
     def gen_bag_feats(self, e_set):
