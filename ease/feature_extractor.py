@@ -17,8 +17,10 @@ import util_functions
 
 log = logging.getLogger(__name__)
 
-base_path = ""
+# Ian Tan, 2020/11/17: edited
+base_path = "D:/AES-Monash/maes/ease/"
 
+# Ian Tan, 2020/11/17: created and downloaded data folder
 #Paths to needed data files
 NGRAM_PATH = base_path + "data/good_pos_ngrams.p"
 ESSAY_CORPUS_PATH = util_functions.ESSAY_CORPUS_PATH
