@@ -148,16 +148,15 @@ class FeatureExtractor(object):
         chars_per_word = [lengths[m] / float(word_counts[m]) for m in range(0, len(text))]
 
         
-        # Ian Tan: Add some shallow features
-        # sentence_counts which is the same as punc_count (not needed)
-        para_counts = [e.count("\r") for e in text]
-        """
-        words_per_sentence = [i / j for i, j in zip(word_counts, punc_count)]
-        sentence_per_para = [i / j for i, j in zip(punc_count, para_counts)]
-        
+        # Ian Tan, 2020/11/17: add some shallow features and change the definition of punctuation
+        punc_count = [e.count(";") + e.count(":") + e.count("!") for e in text]        
+        sentence_count = [e.count(".") for e in text]
+        question_count = [e.count("?") for e in text]
+        words_per_sentence = [i / j for i, j in zip(word_counts, sentence_count)]
         #words_per_sentence = list(map(truediv, word_counts, punc_count)) # as approximation
-        #sentence_per_para = list(map(truediv, punc_count, para_counts)) # as approximation
-        """
+        
+        # can't get paragraph count as the input has been processed
+        # para_counts = [e.count("\r") for e in text]
         
         good_pos_tags,bad_pos_positions= self._get_grammar_errors(e_set._pos,e_set._text,e_set._tokens)
         good_pos_tag_prop = [good_pos_tags[m] / float(word_counts[m]) for m in range(0, len(text))]
@@ -165,17 +164,10 @@ class FeatureExtractor(object):
         # print("length: {}, word_counts: {}, comma_count: {}, ap_count: {}, punc_count: {}, chars_per_word: {}, good_pos_tags: {}, good_pos_tag_prop: {}".format(lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word, good_pos_tags, good_pos_tag_prop))
         
         length_arr = numpy.array((
-        lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word,
-        para_counts,
-        good_pos_tags, good_pos_tag_prop)).transpose()
-        
-        """
-        # Ian Tan: Return new shallow features
-        length_arr = numpy.array((
-            lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word, 
-            para_counts, words_per_sentence, sentence_per_para, good_pos_tags,
-            good_pos_tag_prop)).transpose()
-        """
+            lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word,
+            # Ian Tan, 2020/11/17: added the 3 new shallow features to return
+            sentence_counts, question_count, words_per_sentence,
+            good_pos_tags, good_pos_tag_prop)).transpose()
         
         return length_arr.copy()
 
