@@ -152,7 +152,10 @@ class FeatureExtractor(object):
         punc_count = [e.count(";") + e.count(":") + e.count("!") for e in text]        
         sentence_count = [e.count(".") for e in text]
         question_count = [e.count("?") for e in text]
-        words_per_sentence = [i / j for i, j in zip(word_counts, sentence_count)]
+        # Ian Tan, 2020/11/17: protect against division by zero, just return word_counts if so
+        
+        words_per_sentence = [i/j if j!=0 else i for i, j in zip(word_counts, sentence_count)]
+        #words_per_sentence = [i / j for i, j in zip(word_counts, sentence_count)]
         #words_per_sentence = list(map(truediv, word_counts, punc_count)) # as approximation
         
         # can't get paragraph count as the input has been processed
@@ -166,7 +169,7 @@ class FeatureExtractor(object):
         length_arr = numpy.array((
             lengths, word_counts, comma_count, ap_count, punc_count, chars_per_word,
             # Ian Tan, 2020/11/17: added the 3 new shallow features to return
-            sentence_counts, question_count, words_per_sentence,
+            sentence_count, question_count, words_per_sentence,
             good_pos_tags, good_pos_tag_prop)).transpose()
         
         return length_arr.copy()
