@@ -24,3 +24,7 @@ Automated Essay Scoring with Shallow Linguistic Features
 - added `qwk_scores_with_da.ipynb`: notebook that compiles all QWK scores with domain adaptation (da), added the voting ensemble within a margin but domain adaptation not implemented yet
 
 *Domain Adaptation requires further discussion as it has many possible implementations*
+
+### Update as of 1 Jan 2021
+- updated `qwk_report.ipynb` in `version-original` folder: contains QWK scores of all sets based on original (unmodified) version of `ease`
+- updated `qwk_report.ipynb` in `version-modified` folder: contains QWK scores of all sets based on modified version of `ease`
