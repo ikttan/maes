@@ -33,3 +33,8 @@ Automated Essay Scoring with Shallow Linguistic Features
 ### Update as of 16 Feb 2021
 - updated `qwk_domain_adaptation.ipynb` in `version-modified` folder: contains the QWK scores with domain adaptation implemention of SourceOnly, TargetOnly and EasyAdapt, this uses the modified version of `ease`
 - No modification is done on all other files
+
+
+### Update as of 17 Feb 2021
+- added concat method in `version-original` (by modifying the phi value, refer to inline comments)
+- added median and mean scores for all methods 
