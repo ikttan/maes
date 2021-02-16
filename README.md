@@ -28,3 +28,8 @@ Automated Essay Scoring with Shallow Linguistic Features
 ### Update as of 1 Jan 2021
 - updated `qwk_report.ipynb` in `version-original` folder: contains QWK scores of all sets based on original (unmodified) version of `ease`
 - updated `qwk_report.ipynb` in `version-modified` folder: contains QWK scores of all sets based on modified version of `ease`
+
+
+### Update as of 16 Feb 2021
+- updated `qwk_domain_adaptation.ipynb` in `version-modified` folder: contains the QWK scores with domain adaptation implemention of SourceOnly, TargetOnly and EasyAdapt, this uses the modified version of `ease`
+- No modification is done on all other files
